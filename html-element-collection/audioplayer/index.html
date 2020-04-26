@@ -47,30 +47,30 @@
 'use strict'
 
 function customPlayer() {
-  let musicTracks = ['/mp3/LA Chill Tour.mp3','/mp3/This is it band.mp3','/mp3/LA Fusion Jam.mp3'];
+  let musicTracks = ['mp3/LA Chill Tour.mp3','mp3/This is it band.mp3','mp3/LA Fusion Jam.mp3'];
   let playerWrap = document.getElementsByClassName('mediaplayer')[0];
   let audio = playerWrap.getElementsByTagName('audio')[0]; 
   let playBtn = playerWrap.getElementsByClassName('playstate')[0];
   let stopBtn = playerWrap.getElementsByClassName('stop')[0];
   let backBtn = playerWrap.getElementsByClassName('back')[0];
   let nextBtn = playerWrap.getElementsByClassName('next')[0];
+  let count = 0;
+  let activeTitle = playerWrap.getElementsByClassName('title')[0];
 
   //title generator
   let titles = [];
 
   let titlesGenerate = () => {
     for(let title of musicTracks) {
-      titles.push(title.replace(new RegExp("/mp3/"), ''));
+      titles.push(title.replace(new RegExp("mp3/"), ''));
     }
   }
   titlesGenerate();
-
-  console.log(titles);
-
   //default setup player
+  audio.src =  musicTracks[count];
+  activeTitle.title = titles[count];
 
-
-
+  //setup button control
   playBtn.onclick = () => {
     audio.play();
     playerWrap.classList.add('play');
@@ -82,7 +82,29 @@ function customPlayer() {
     playerWrap.classList.remove('play');
   }
 
-  console.log(playBtn, stopBtn, backBtn, nextBtn);
+  nextBtn.onclick = () => {
+    if(count >= 2) {
+      count = 0;
+    } else {
+      count++;
+    }
+    audio.src =  musicTracks[count];
+    activeTitle.title = titles[count];
+    audio.play();
+    playerWrap.classList.add('play');
+  }
+
+  backBtn.onclick = () => {
+    if(count == 0) {
+      count = 2;
+    } else {
+      count--;
+    }
+    audio.src =  musicTracks[count];
+    activeTitle.title = titles[count];
+    audio.play();
+    playerWrap.classList.add('play');
+  }
 }  
  
 customPlayer(); 
