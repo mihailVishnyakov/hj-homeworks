@@ -36,3 +36,20 @@
   </ul>
 </body>
 </html>
+
+<script>
+  
+'use strict'
+
+let dropMenu = document.getElementsByClassName('wrapper-dropdown');
+
+
+for( let elem of dropMenu){
+  elem.onclick = () => {
+    if(elem.classList.contains('wrapper-dropdown')){
+      elem.classList.toggle('active');
+    }
+  }
+}   
+  
+</script>
