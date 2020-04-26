@@ -40,3 +40,50 @@
   </div>
 </body>
 </html>
+
+
+<script>
+  
+'use strict'
+
+function customPlayer() {
+  let musicTracks = ['/mp3/LA Chill Tour.mp3','/mp3/This is it band.mp3','/mp3/LA Fusion Jam.mp3'];
+  let playerWrap = document.getElementsByClassName('mediaplayer')[0];
+  let audio = playerWrap.getElementsByTagName('audio')[0]; 
+  let playBtn = playerWrap.getElementsByClassName('playstate')[0];
+  let stopBtn = playerWrap.getElementsByClassName('stop')[0];
+  let backBtn = playerWrap.getElementsByClassName('back')[0];
+  let nextBtn = playerWrap.getElementsByClassName('next')[0];
+
+  //title generator
+  let titles = [];
+
+  let titlesGenerate = () => {
+    for(let title of musicTracks) {
+      titles.push(title.replace(new RegExp("/mp3/"), ''));
+    }
+  }
+  titlesGenerate();
+
+  console.log(titles);
+
+  //default setup player
+
+
+
+  playBtn.onclick = () => {
+    audio.play();
+    playerWrap.classList.add('play');
+  }
+
+  stopBtn.onclick = () => {
+    audio.pause();
+    audio.currentTime = 0;
+    playerWrap.classList.remove('play');
+  }
+
+  console.log(playBtn, stopBtn, backBtn, nextBtn);
+}  
+ 
+customPlayer(); 
+</script>
