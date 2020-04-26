@@ -36,3 +36,16 @@
   </ul>
 </body>
 </html>
+
+
+<script>
+  'use strict'
+
+  let drums = document.getElementsByClassName('drum-kit__drum');
+  for(let drum of drums) {
+    drum.onclick = () => {
+      let audio = drum.getElementsByTagName('audio');
+      audio[0].play();
+    }
+  }
+</script>
