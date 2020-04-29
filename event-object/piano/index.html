@@ -27,3 +27,43 @@
   </ul>
 </body>
 </html>
+
+<script>
+  'use strict'
+  let tonality = 'middle';
+  let notesName = ['first','second','third','fourth','fifth'];
+  let buttons = Array.from(document.getElementsByTagName('li'));
+  let tonalityVisual = document.getElementsByClassName('set');
+
+  //определяем события зажатий клавиш
+  function tonalityEvents(event) {
+    if(event.key == "Shift"){
+      tonality = 'lower';
+    } else if(event.key == "Alt") {
+      tonality = 'higher';
+    }  
+  }
+
+  buttons.forEach(
+    function(button, index) {
+      let audio = button.getElementsByTagName('audio');
+
+      //обрабатываем события клавиш при клике
+      document.addEventListener('keydown',tonalityEvents);
+      document.addEventListener('keyup',() => tonality = 'middle');
+
+      //обрабатываем сам клик
+      button.addEventListener('click', () => {
+        audio[0].src = `sounds/${tonality}/${notesName[index]}.mp3`;
+
+        //не очень уверен по поводу подвешивания динамического класса у елемента 'ul' на такой манер, но другого способа не предумал
+        tonalityVisual[0].className = 'set ' + tonality; 
+        audio[0].play();
+      }); 
+  });
+
+
+
+ 
+
+</script>
