@@ -35,3 +35,25 @@
   </nav>
 </body>
 </html>
+
+<script>
+  'use strict'
+  let skateCollection = document.getElementsByTagName('a');
+  
+  function clickOnSkate(event) {
+    //снимаем стандартные действия браузера с элемента и получаем объект клика
+    event.preventDefault();
+    let selectedSkate = event.currentTarget;
+
+    //вешаем класс только на активный элемент и передаем верный путь к картинке для элемента img
+    Array.from(skateCollection).forEach(elem => elem.classList.remove('gallery-current'));
+    selectedSkate.classList.add('gallery-current');
+    let skateBigImg = document.getElementsByClassName('gallery-view')[0];
+    skateBigImg.src = selectedSkate.href;
+  }
+
+  Array.from(skateCollection).forEach(elem => elem.addEventListener('click', clickOnSkate));
+  
+
+
+</script>
