@@ -47,3 +47,46 @@
   </main>
 </body>
 </html>
+
+<script>
+  'use strict'
+
+  let resultKeyDownArray = [];
+  let secretKey = '';
+
+  function callNavMenu(event) {
+    //скидываем настройки браузера
+    event.preventDefault();
+    let navMenu = document.getElementsByTagName('nav');
+    
+    if(event.key == 'Control') {
+      resultKeyDownArray[0] = true; 
+    } else if(event.key == 'Alt') {
+      resultKeyDownArray[1] = true;
+    } else if(event.code == 'KeyT') {
+      resultKeyDownArray[2] = true;
+    }
+
+    //проеряем нажатие клавиш
+    if(resultKeyDownArray[0] == true && resultKeyDownArray[1] == true && resultKeyDownArray[2] == true) {
+      navMenu[0].classList.toggle('visible');
+      resultKeyDownArray = [];
+    } 
+
+  }
+
+  function secretCode(event) {
+    event.preventDefault();
+    let secretWrapp = document.getElementsByClassName('secret');
+    secretKey += event.code;
+    
+    if(secretKey.match(/KeyYKeyTKeyNKeyJKeyKKeyJKeyUKeyBKeyZ/)) {
+      secretWrapp[0].classList.toggle('visible');
+      secretKey = '';
+    }
+  
+  }
+
+  document.addEventListener('keydown', callNavMenu);
+  document.addEventListener('keydown', secretCode);
+</script>
