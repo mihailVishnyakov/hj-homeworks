@@ -40,7 +40,7 @@
 
   //очищаем контейнер и создаем теги
   for(let contact of loadContactsResult) {
-    contactsConteiner.push(`<li><strong>${contact.name}</strong></li>`);
+    contactsConteiner.push(`<li></li>`);
   }
   contactsList.innerHTML = contactsConteiner.join('');
 
@@ -49,6 +49,7 @@
   listArray.forEach((elem, index) => {
     elem.dataset.email = loadContactsResult[index].email;
     elem.dataset.phone = loadContactsResult[index].phone;
+    elem.innerHTML = `<strong>${loadContactsResult[index].name}<strong>`;
   });  
 
 </script>
