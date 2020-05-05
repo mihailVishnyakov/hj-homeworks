@@ -29,3 +29,26 @@
   </div>
 </body>
 </html>
+
+
+<script>
+  'use strict'
+
+  let loadContactsResult = JSON.parse(loadContacts());
+  let contactsList = document.getElementsByClassName('contacts-list')[0];
+  let contactsConteiner = [];
+
+  //очищаем контейнер и создаем теги
+  for(let contact of loadContactsResult) {
+    contactsConteiner.push(`<li><strong>${contact.name}</strong></li>`);
+  }
+  contactsList.innerHTML = contactsConteiner.join('');
+
+  //получаем созданые элементы и задаем им аттрибуты
+  let listArray = document.querySelectorAll('.contacts-list li');
+  listArray.forEach((elem, index) => {
+    elem.dataset.email = loadContactsResult[index].email;
+    elem.dataset.phone = loadContactsResult[index].phone;
+  });  
+
+</script>
