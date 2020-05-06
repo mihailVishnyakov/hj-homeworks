@@ -46,3 +46,31 @@
   </div>
 </body>
 </html>
+
+<script>
+  'use strict'
+  //инициализируем элементы
+  let cartCount = document.getElementById('cart-count');
+  let cartTotalPrice = document.getElementById('cart-total-price');
+  let buttonsItemsToCart = document.querySelectorAll('button.add');
+
+  function addToBasket(event) {
+    //инициализируем состояние элементов
+    let price = parseInt(event.currentTarget.dataset.price);
+    let basketCount = parseInt(cartCount.innerHTML);
+    let finalPrice = parseInt(cartTotalPrice.innerHTML);
+
+    //изменяем состояние
+    basketCount += 1;
+    finalPrice += price;
+
+    //передаем состояние в элементы
+    cartCount.innerHTML = basketCount;
+    cartTotalPrice.innerHTML = finalPrice;
+  }
+
+  //вешаем событие на кнопки
+  buttonsItemsToCart.forEach(elem => elem.addEventListener('click', addToBasket));
+
+
+</script>
