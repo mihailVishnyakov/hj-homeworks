@@ -58,19 +58,9 @@
     //скидываем настройки браузера
     event.preventDefault();
     let navMenu = document.getElementsByTagName('nav');
-    
-    if(event.key == 'Control') {
-      resultKeyDownArray[0] = true; 
-    } else if(event.key == 'Alt') {
-      resultKeyDownArray[1] = true;
-    } else if(event.code == 'KeyT') {
-      resultKeyDownArray[2] = true;
-    }
-
-    //проеряем нажатие клавиш
-    if(resultKeyDownArray[0] == true && resultKeyDownArray[1] == true && resultKeyDownArray[2] == true) {
+    //отлавливаем событие
+    if((event.ctrlKey && event.altKey) && event.code == 'KeyT') {
       navMenu[0].classList.toggle('visible');
-      resultKeyDownArray = [];
     } 
 
   }
