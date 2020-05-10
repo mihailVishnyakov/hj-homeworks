@@ -23,3 +23,21 @@
   </div>
 </body>
 </html>
+
+<script>
+  'use strict'
+  let links = document.querySelectorAll('nav > a');
+
+  const EMAIL_REQUEST = new XMLHttpRequest();
+  EMAIL_REQUEST.open(
+    "GET",
+    links[0].href,
+    true
+  );
+
+  EMAIL_REQUEST.send();
+
+  console.log(EMAIL_REQUEST.responseText);
+
+
+</script>
