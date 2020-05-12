@@ -26,5 +26,41 @@
   </ul>
 
   <script src="js/built-in-ui.js"></script>
+  <script>
+    'use strict'
+    //создаем новый XHR запрос
+    let booksBase = new XMLHttpRequest();
+    
+    //обрабатываем ошибки сети
+    booksBase.addEventListener("error", ()=> console.log('произошла ошибка сети'));
+
+    //получаем запрос списка книг
+    booksBase.addEventListener('load', loadLibrary);
+    booksBase.open(
+      "GET",
+      "https://neto-api.herokuapp.com/book/",
+      true
+    );
+    booksBase.send();
+
+    //при удачном получении запроса создаем элементы из полученного списка
+    function loadLibrary() {
+      if(booksBase.status !== 200) {
+        console.log(`Ошибка ${booksBase.status}: ${booksBase.statusText}`);
+      } else {
+        let booksContainer = document.getElementById('content');
+        let content = '';
+        let booksBaseObj = JSON.parse(booksBase.responseText);
+        
+        //собираем список книг(незнаю, корректна ли такая установка data аттрибутов в данном случае?)
+        booksBaseObj.forEach((elem)=> {
+          content += `<li data-title="${elem.title}" data-author="${elem.author.name}" data-info="${elem.info}" data-price="${elem.price}"><img src="${elem.cover.small}"></li>`;
+        });
+
+        booksContainer.innerHTML = content;
+      } 
+    }
+  </script>
+
 </body>
 </html>
