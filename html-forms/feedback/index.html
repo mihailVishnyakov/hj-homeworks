@@ -103,7 +103,7 @@
   	let submitBtn = document.querySelector('[type="submit"]');
   	let changeMess = document.querySelector('#output .button-contact');
 
-  	//отслеживаем оведение пользователя
+  	//отслеживаем поведение пользователя
   	formFilds.forEach((elem) => elem.addEventListener('input', fillingFields));
 
   	function fillingFields() {
@@ -120,7 +120,7 @@
   			} 
   		}
 
-  		//присваем значения в поля output
+  		//присваиваем значения в поля output
   		Array.from(outputs).forEach((outputVal) => {
   			Array.from(formFilds).filter((inputVal) => {
   				if(outputVal.id == inputVal.name) {
@@ -129,7 +129,7 @@
   			});
   		});
 
-  		//активируем кнопку "отправить сообщение" усли все поля заполнены
+  		//активируем кнопку "отправить сообщение" если все поля заполнены
   		if(formFilds.length == fildsCounter.length) {
   			submitBtn.removeAttribute('disabled');
   		} else {
