@@ -20,3 +20,67 @@
   <div id="loader" class="hidden">Загрузка...</div>
 </body>
 </html>
+
+<script>
+  'use strict'
+  let preloader = document.getElementById('loader');
+  let content = document.getElementById('content');
+  let fromWrapp = document.getElementById('from');
+  let toWrapp = document.getElementById('to');
+  let source = document.getElementById('source');
+  let result = document.getElementById('result');
+
+  //создаем GET запрос курса валют
+  let exchangeRatesXhr = new XMLHttpRequest();
+
+  //инициализируем работу прелоадера
+  exchangeRatesXhr.addEventListener('loadstart', () => {
+    preloader.classList.remove('hidden');
+  });
+  exchangeRatesXhr.addEventListener('loadend', () => {
+    preloader.classList.add('hidden');
+    content.classList.remove('hidden');
+  });
+
+  exchangeRatesXhr.addEventListener('load', currencyCount);
+  exchangeRatesXhr.open(
+    "GET",
+    "https://neto-api.herokuapp.com/currency",
+    true
+  );
+  exchangeRatesXhr.send();
+
+  function currencyCount() {
+    if (exchangeRatesXhr.status == 200) {
+
+      //наполняем котейнеры #from и #to валютами
+      let exchangeRatesJson = JSON.parse(exchangeRatesXhr.responseText);
+      let currencyValue = '';
+
+      exchangeRatesJson.forEach((elem) => {
+        currencyValue += `<option value="${elem.value}" title="${elem.title}">${elem.code}</option>`;
+      });
+
+      fromWrapp.innerHTML = currencyValue;
+      toWrapp.innerHTML = currencyValue;
+
+      //создаем и инициализируем функцию подсчета курса валют
+      function calculateCurrency() {
+        let fromVal = parseInt(fromWrapp.value);
+        let toVal = parseInt(toWrapp.value);
+        let sourceVal = parseInt(source.value);
+        
+        result.value = ((fromVal * sourceVal) / toVal).toFixed(2);
+      }
+
+      fromWrapp.addEventListener('input', calculateCurrency);
+      toWrapp.addEventListener('input', calculateCurrency);
+      source.addEventListener('input', calculateCurrency);
+
+      //инициализация для загрузки страницы
+      calculateCurrency(); 
+    }
+  }
+  
+
+</script>
