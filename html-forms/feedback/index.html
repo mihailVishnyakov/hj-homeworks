@@ -93,5 +93,64 @@
   </main>
 
   <script src="https://use.fontawesome.com/70378a66b8.js"></script>
+  <script>
+  	'use strict'
+  	let formWrapp = document.getElementsByClassName('contentform')[0];
+  	let formFilds = document.querySelectorAll('[name="lastname"], [name="name"], [name="email"], [name="company"], [name="address"], [name="zip"], [name="city"], [name="phone"], [name="role"], [name="subject"], [name="message"]');
+  	let outputWrapp = document.getElementById('output');
+  	let outputs = document.getElementsByTagName('output');
+  	
+  	let submitBtn = document.querySelector('[type="submit"]');
+  	let changeMess = document.querySelector('#output .button-contact');
+
+  	//отслеживаем оведение пользователя
+  	formFilds.forEach((elem) => elem.addEventListener('input', fillingFields));
+
+  	function fillingFields() {
+  		let fildsCounter = [];
+
+  		for(let fild of formFilds) {
+  			//исключаем поля с пробелами и пустые поля из счетчика заполненых полей
+  			if(fild.value.trim() != '') {
+  				fildsCounter.push(fild);
+  			}
+  			//исключаем из ввода в строку с почтовым ндексом все кроме цифр 
+  			if(fild.name == 'zip'){
+  				fild.value = fild.value.replace(/\D/, '');
+  			} 
+  		}
+
+  		//присваем значения в поля output
+  		Array.from(outputs).forEach((outputVal) => {
+  			Array.from(formFilds).filter((inputVal) => {
+  				if(outputVal.id == inputVal.name) {
+  					outputVal.value = inputVal.value;
+  				}
+  			});
+  		});
+
+  		//активируем кнопку "отправить сообщение" усли все поля заполнены
+  		if(formFilds.length == fildsCounter.length) {
+  			submitBtn.removeAttribute('disabled');
+  		} else {
+  			submitBtn.setAttribute('disabled', '');
+  		}
+  		
+  	}
+
+  	//обрабатываем события для кнопок "Отправить сообщение" и "Изменить сообщение"
+  	submitBtn.addEventListener('click', (event) => {
+  		event.preventDefault();
+  		outputWrapp.classList.remove('hidden');
+  		formWrapp.classList.add('hidden');
+  	});
+
+  	changeMess.addEventListener('click', (event) => {
+  		outputWrapp.classList.add('hidden');
+  		formWrapp.classList.remove('hidden');
+  	});
+
+
+  </script>
 </body>
 </html>
