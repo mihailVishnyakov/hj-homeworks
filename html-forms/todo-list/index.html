@@ -37,7 +37,7 @@
   let checks = document.getElementsByTagName('input');
   let outputValue = document.getElementsByTagName('output')[0];
   let listBlock = document.getElementsByClassName('list-block')[0];
-  //устанавливаем значение для списка по умолчание и вешаем функцию обработчик на элементы
+  //устанавливаем значение для списка по умолчанию и вешаем функцию обработчик на элементы
   outputValue.value = `1 из 4`;
   Array.from(checks).forEach((elem) => elem.addEventListener('click', todoList));
 
