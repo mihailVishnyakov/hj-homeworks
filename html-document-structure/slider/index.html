@@ -39,6 +39,62 @@
       </li>
     </ul>
   </main>
-  <script src="./js/slider.js"></script>
+  <!--<script src="./js/slider.js"></script>-->
 </body>
+
+<script>
+  'use strict'
+  let sliderWrapp = document.getElementsByClassName('slides')[0];
+  let sliderButtons = document.querySelectorAll('.slider-nav > a');
+
+  let startSlide = sliderWrapp.firstElementChild;
+  let endSlide = sliderWrapp.lastElementChild;
+  startSlide.classList.add('slide-current');
+
+  function sliderControl(event) {
+    event.preventDefault();
+    let controlBtn = event.currentTarget;
+    let activeSlide = document.getElementsByClassName('slide-current')[0];
+
+    function cheakSlides(buttonCheakS) {
+      if(startSlide.classList.contains('slide-current') || endSlide.classList.contains('slide-current')) {
+        buttonCheakS.classList.add('disabled');
+      } else {
+        buttonCheakS.classList.remove('disabled');
+      }
+    }
+
+    sliderButtons.forEach((elem) => cheakSlides(elem));
+
+    console.log(startSlide.classList.contains('slide-current'));
+    console.log(endSlide.classList.contains('slide-current'));
+
+
+
+    switch(controlBtn.dataset.action) {
+      case 'prev':
+        if(activeSlide.previousElementSibling != null) {
+          activeSlide.classList.remove('slide-current');
+          activeSlide.previousElementSibling.classList.add('slide-current');
+        }    
+      break;
+      case 'next':
+        if(activeSlide.nextElementSibling != null) {
+          activeSlide.classList.remove('slide-current');
+          activeSlide.nextElementSibling.classList.add('slide-current');
+        } 
+      break;
+      case 'first':
+        console.log('case first');
+      break;
+      case 'last':
+        console.log('case last');
+      break;
+      default:
+        console.log('default');
+    }
+  }
+
+  sliderButtons.forEach((elem) => elem.addEventListener('click', sliderControl));
+</script>
 </html>
