@@ -57,7 +57,7 @@
     let activeSlide = document.getElementsByClassName('slide-current')[0];
 
     function cheakSlides(buttonCheakS) {
-      if(startSlide.classList.contains('slide-current') || endSlide.classList.contains('slide-current')) {
+      if(activeSlide.nextElementSibling.classList.contains('slide-current') || activeSlide.previousElementSibling.classList.contains('slide-current')) {
         buttonCheakS.classList.add('disabled');
       } else {
         buttonCheakS.classList.remove('disabled');
