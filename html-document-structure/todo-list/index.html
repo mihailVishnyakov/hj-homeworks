@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
@@ -42,6 +42,29 @@
       </label>
     </section>
   </main>
-  <script src="./js/todo.js"></script>
+  <!--<script src="./js/todo.js"></script>-->
 </body>
 </html>
+
+<script>
+  'use strict'
+  let listItems = document.querySelectorAll('input');
+  let done = document.getElementsByClassName('done')[0];
+  let undone = document.getElementsByClassName('undone')[0];
+
+  function listItemCheck(event) {
+    let checker = event.currentTarget;
+    let label = checker.parentElement;
+    if(checker.checked == true){
+      done.appendChild(label);
+    } else {
+      undone.appendChild(label);
+    }
+    
+  }
+
+  listItems.forEach((elem) => {
+    elem.addEventListener('click', listItemCheck);
+  });
+
+</script>
