@@ -47,54 +47,79 @@
   let sliderWrapp = document.getElementsByClassName('slides')[0];
   let sliderButtons = document.querySelectorAll('.slider-nav > a');
 
-  let startSlide = sliderWrapp.firstElementChild;
-  let endSlide = sliderWrapp.lastElementChild;
-  startSlide.classList.add('slide-current');
+  //устанавливаем первый активный элемент слайдера
+  sliderWrapp.firstElementChild.classList.add('slide-current');
 
+  //создаем функцию проверки состояния кнопок в слайдере
+  function buttonsState() {
+    let activeSlide = document.getElementsByClassName('slide-current')[0];
+    sliderButtons.forEach((elem) => {
+      switch(elem.dataset.action) {
+        case 'prev':
+          if(activeSlide.previousElementSibling == null) {
+            elem.classList.add('disabled');
+          } else {
+            elem.classList.remove('disabled');
+          }
+        break;
+        case 'next':
+          if(activeSlide.nextElementSibling == null) {
+            elem.classList.add('disabled');
+          } else {
+            elem.classList.remove('disabled');
+          }
+        break;
+        case 'first':
+          if(sliderWrapp.firstElementChild.classList.contains('slide-current') == true) {
+            elem.classList.add('disabled');
+          } else {
+            elem.classList.remove('disabled');
+          }
+        break;
+        case 'last':
+          if(sliderWrapp.lastElementChild.classList.contains('slide-current') == true) {
+            elem.classList.add('disabled');
+          } else {
+            elem.classList.remove('disabled');
+          }
+        break;
+      }
+    });      
+  }
+  
+ 
+  //создаем функцию переключения слайдов
   function sliderControl(event) {
+    let activeSlide = document.getElementsByClassName('slide-current')[0];
     event.preventDefault();
     let controlBtn = event.currentTarget;
-    let activeSlide = document.getElementsByClassName('slide-current')[0];
-
-    function cheakSlides(buttonCheakS) {
-      if(activeSlide.nextElementSibling.classList.contains('slide-current') || activeSlide.previousElementSibling.classList.contains('slide-current')) {
-        buttonCheakS.classList.add('disabled');
-      } else {
-        buttonCheakS.classList.remove('disabled');
-      }
-    }
-
-    sliderButtons.forEach((elem) => cheakSlides(elem));
-
-    console.log(startSlide.classList.contains('slide-current'));
-    console.log(endSlide.classList.contains('slide-current'));
-
-
-
     switch(controlBtn.dataset.action) {
       case 'prev':
         if(activeSlide.previousElementSibling != null) {
           activeSlide.classList.remove('slide-current');
           activeSlide.previousElementSibling.classList.add('slide-current');
-        }    
+        }           
       break;
       case 'next':
         if(activeSlide.nextElementSibling != null) {
           activeSlide.classList.remove('slide-current');
           activeSlide.nextElementSibling.classList.add('slide-current');
-        } 
+        }
       break;
       case 'first':
-        console.log('case first');
+        activeSlide.classList.remove('slide-current');
+        sliderWrapp.firstElementChild.classList.add('slide-current');
       break;
       case 'last':
-        console.log('case last');
+        activeSlide.classList.remove('slide-current');
+        sliderWrapp.lastElementChild.classList.add('slide-current');
       break;
-      default:
-        console.log('default');
     }
+    buttonsState(); 
   }
 
+  
   sliderButtons.forEach((elem) => elem.addEventListener('click', sliderControl));
+  buttonsState();
 </script>
 </html>
