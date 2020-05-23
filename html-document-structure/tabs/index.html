@@ -53,3 +53,46 @@
   <!--<script src="./js/tabs.js"></script>-->
 </body>
 </html>
+
+<script>
+  'use strict'
+  let tabsWrapp = document.getElementsByClassName('tabs-nav')[0];
+  let demoTab = document.querySelector('.tabs-nav > li');
+  
+  let tabsContentWrapp = document.getElementsByClassName('tabs-content')[0];
+  let articles = tabsContentWrapp.children;
+  
+  //клонируем табы и удаляем демо-таб
+  for(let article of articles) {
+    let cloneTab = demoTab.cloneNode(true);
+    cloneTab.firstElementChild.textContent = article.dataset.tabTitle;
+    cloneTab.firstElementChild.classList.add(article.dataset.tabIcon);
+    tabsWrapp.appendChild(cloneTab);
+  }
+
+  demoTab.remove();
+
+  //устанавливаем значения по умолчанию на странице
+  Array.from(articles).forEach(article => article.classList.add('hidden'));
+  articles[0].classList.remove('hidden');
+  tabsWrapp.firstElementChild.classList.add('ui-tabs-active');
+
+  //создаем функцию-обработчик переключения табов и игициализируем ее
+  function selectTab(event) {
+    event.preventDefault();
+    let activeTab = event.currentTarget;
+    Array.from(activeTab.parentElement.children).forEach(elem => elem.classList.remove('ui-tabs-active'));
+    activeTab.classList.add('ui-tabs-active');
+
+    Array.from(articles).forEach((article) => {
+      if(article.dataset.tabTitle == activeTab.firstElementChild.textContent) {
+        article.classList.remove('hidden');
+      } else {
+        article.classList.add('hidden');
+      }
+    });
+  }
+
+  Array.from(tabsWrapp.children).forEach(elem => elem.addEventListener('click', selectTab));
+  
+</script>
