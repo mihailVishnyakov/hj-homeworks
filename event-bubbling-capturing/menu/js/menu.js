@@ -1,12 +1,14 @@
 'use strict';
 
 function toggleMenu(event) {
-  if (this.classList.contains('show')) {
-    this.classList.remove('show');
-    this.classList.add('hide');
+  event.preventDefault();
+  console.log(event.target);
+  if (event.target.parentNode.classList.contains('show')) {
+    event.target.parentNode.classList.remove('show');
+    event.target.parentNode.classList.add('hide');
   } else {
-    this.classList.add('show');
-    this.classList.remove('hide');
+    event.target.parentNode.classList.add('show');
+    event.target.parentNode.classList.remove('hide');
   }
 }
 
