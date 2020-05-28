@@ -1,8 +1,7 @@
 'use strict';
-
+//изменения вносил только в функцию toggleMenu
 function toggleMenu(event) {
   event.preventDefault();
-  console.log(event.target);
   if (event.target.parentNode.classList.contains('show')) {
     event.target.parentNode.classList.remove('show');
     event.target.parentNode.classList.add('hide');
