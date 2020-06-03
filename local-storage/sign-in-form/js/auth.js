@@ -2,7 +2,7 @@
 let regForm = document.getElementsByClassName('sign-up-htm')[0];
 let regFormSubmit = regForm.querySelector('[type="submit"]');
 
-let loginForm = document.getElementsByClassName('sign-up-htm')[0];
+let loginForm = document.getElementsByClassName('sign-in-htm')[0];
 let loginFormSubmit = loginForm.querySelector('[type="submit"]');
 
 function regUser(event) {
@@ -21,12 +21,12 @@ function regUser(event) {
 		method:'POST',
 		headers:{'Content-Type':'application/json'}
 	}).then(function(response) {
-	    // Получаем код ответа сервера.
+	    // Проверяем код ответа сервера.
 	    if (!response.ok) {
 	        return Promise.reject(new Error(response.statusText));
 	    }
 	    // Далее будем использовать только JSON из тела ответа.
-	    //.json() - метод обработки ответа https://developer.mozilla.org/ru/docs/Web/API/Body/json
+	    //.json() - метод обработки тела ответа https://developer.mozilla.org/ru/docs/Web/API/Body/json
 	    return response.json();
 	}).then(function(requestText) {
 		delete requestText.password;
@@ -57,12 +57,9 @@ function loginUser(event) {
 		method:'POST',
 		headers:{'Content-Type':'application/json'}
 	}).then(function(response) {
-	    // Получаем код ответа сервера.
 	    if (!response.ok) {
 	        return Promise.reject(new Error(response.statusText));
 	    }
-	    // Далее будем использовать только JSON из тела ответа.
-	    //.json() - метод обработки ответа https://developer.mozilla.org/ru/docs/Web/API/Body/json
 	    return response.json();
 	}).then(function(requestText) {
 		delete requestText.password;
@@ -71,7 +68,7 @@ function loginUser(event) {
 		if(requestText.error == true) {
 			regFormMessege.textContent = requestText.message;
 		} else {
-			regFormMessege.textContent = `Пользователь ${requestText.name} успешно зарегистрирован`;
+			regFormMessege.textContent = `Пользователь ${requestText.name} успешно авторизован`;
 		}
 	}).catch(function (error) {
 	    console.log(error);
