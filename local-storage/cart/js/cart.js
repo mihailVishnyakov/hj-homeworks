@@ -4,13 +4,6 @@ let colorsWrapp = document.getElementById('colorSwatch');
 let sizesWrapp = document.getElementById('sizeSwatch');
 
 
-function itemState(event) {
-	if(event.target.checked) {
-		localStorage.setItem(event.target);
-	}
-}
-
-
 
 let colorsGetRequest = fetch(
 	'https://neto-api.herokuapp.com/cart/colors').then((res) => {
@@ -27,7 +20,7 @@ let colorsGetRequest = fetch(
 
 			let colorItem = `<div data-value="${color.type}" class="swatch-element color ${color.type} ${availableVal}">
 			  <div class="tooltip">${color.title}</div>
-			  <input quickbeam="color" id="swatch-1-${color.type}" type="radio" name="color" value="${color.type} ${disabledVal}">
+			  <input quickbeam="color" id="swatch-1-${color.type}" type="radio" name="color" value="${color.type}" ${disabledVal}>
 			  <label for="swatch-1-${color.type}" style="border-color: red;">
 			    <span style="background-color: ${color.code};"></span>
 			    <img class="crossed-out" src="https://neto-api.herokuapp.com/hj/3.3/cart/soldout.png?10994296540668815886">
@@ -37,14 +30,36 @@ let colorsGetRequest = fetch(
 			colorSwatch.innerHTML += colorItem;
 		});
 
-		console.log(colorsWrapp);
-		Array.from(colorsWrapp).forEach((elem) => {
-			elem.addEventListener('click', itemState);
+		let radiosButtons = colorsWrapp.querySelectorAll('input');
+
+		Array.from(radiosButtons).forEach((radio) => {
+			radio.addEventListener('input', (e) => {
+			  	localStorage.selectedColor = e.target.value;
+			});
+
 		});
+
+		Array.from(radiosButtons).forEach((radio) => {
+			if(localStorage.selectedColor == radio.value) {
+				radio.setAttribute('checked', 'true');
+			}
+		});
+
+		
+		
 
 	}).catch((error) => {
 		console.log(error);
 });
+
+
+
+
+
+
+
+
+
 
 /*
 
@@ -81,6 +96,22 @@ let sizesGetRequest = fetch(
 			</div>`;
 
 			sizesWrapp.innerHTML += sizeItem;
+
+			let radiosButtons = sizesWrapp.querySelectorAll('input');
+
+			Array.from(radiosButtons).forEach((radio) => {
+				radio.addEventListener('input', (e) => {
+				  	localStorage.selectedSize = e.target.value;
+				});
+
+			});
+
+			Array.from(radiosButtons).forEach((radio) => {
+				if(localStorage.selectedSize == radio.value) {
+					radio.setAttribute('checked', 'true');
+				}
+			});
+
 		});
 
 	}).catch((error) => {
