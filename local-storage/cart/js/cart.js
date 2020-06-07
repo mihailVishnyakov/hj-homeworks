@@ -144,7 +144,7 @@ let sizesGetRequest = fetch(
 let cartStateGetRequest = fetch(
 	'https://neto-api.herokuapp.com/cart').then((res) => {
 		if(!res.ok) {
-			return Promise.reject(new Error(response.statusText));
+			return Promise.reject(new Error(res.statusText));
 		}
 		return res.json();
 	}).then((date) => {
@@ -152,3 +152,40 @@ let cartStateGetRequest = fetch(
 	}).catch((error) => {
 		console.log(error);
 });
+
+
+/*
+Корзина доступна в теге с идентификатором quick-cart. Сначала идут сниппеты товаров. Сниппет товара в корзине выглядит следующим образом:
+
+<div class="quick-cart-product quick-cart-product-static" id="quick-cart-product-2721888517" style="opacity: 1;">
+  <div class="quick-cart-product-wrap">
+    <img src="https://neto-api.herokuapp.com/hj/3.3/cart/product_1024x1024.png" title="Tony Hunfinger T-Shirt New York">
+    <span class="s1" style="background-color: #000; opacity: .5">$800.00</span>
+    <span class="s2"></span>
+  </div>
+  <span class="count hide fadeUp" id="quick-cart-product-count-2721888517">1</span>
+  <span class="quick-cart-product-remove remove" data-id="2721888517"></span>
+</div>
+Обратите внимание на подстановку данных:
+
+Идентификатор товара подставляется в атрибут id тега <div>, в атрибут id тега <span> и в атрибут data-id тега с классом remove.
+Адрес картинки подставляется в атрибут src тега <img>.
+Название товара подставляется в атрибут title тега <img>.
+
+Количество товара в корзине подставляется в тело тега с классом count.
+Сниппет корзины идет сразу после сниппетов товаров:
+
+<a id="quick-cart-pay" quickbeam="cart-pay" class="cart-ico open">
+  <span>
+    <strong class="quick-cart-text">Оформить заказ<br></strong>
+    <span id="quick-cart-price">$800.00</span>
+  </span>
+</a>
+Подстановка данных:
+
+Если в корзине нет товаров, то класс open необходимо удалить.
+Общая стоимость всех товаров выводится в тег с идентификатором quick-cart-price.
+Форма отправки заказа имеет идентификатор AddToCartForm.
+
+Кнопка удаления товара из корзины имеет класс remove. Идентификатор удаляемого товара можно получить из атрибута data-id.
+*/
